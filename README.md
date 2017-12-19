@@ -1,4 +1,8 @@
 # ColorPickLayout
+[![](https://jitpack.io/v/inlacou/colorpicklayout.svg)](https://jitpack.io/#inlacou/colorpicklayout)
+
+Click on jitpack plugin above here to see how to import last library version.
+
 Layout in which you can select color on touch.
 
 Add as your base layout:
