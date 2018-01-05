@@ -14,11 +14,12 @@ import android.widget.FrameLayout
 import java.lang.IllegalArgumentException
 import android.view.View
 
-
-
 class ColorPickLayout : FrameLayout {
 
 	private var cursor: Cursor? = null
+	private var actionDownTime: Long = 0
+	var singleClickListener: SingleClickListener? = null
+	var singleClickThresholdLimit = 60
 
 	private val color: Int
 		get() = cursor!!.color
@@ -78,9 +79,19 @@ class ColorPickLayout : FrameLayout {
 		setOnTouchListener { v, event ->
 			if (cursor != null) {
 				when (event.action) {
-					MotionEvent.ACTION_DOWN -> onTouchReceived(event)
-					MotionEvent.ACTION_MOVE -> onTouchReceived(event)
-					MotionEvent.ACTION_UP -> {onTouchReceived(event); false}
+					MotionEvent.ACTION_DOWN -> {
+						actionDownTime = System.currentTimeMillis()
+						//onTouchReceived(event)
+						true
+					}
+					MotionEvent.ACTION_MOVE -> {
+						onTouchReceived(event)
+					}
+					MotionEvent.ACTION_UP -> {
+						//onTouchReceived(event)
+						if(System.currentTimeMillis()-actionDownTime<singleClickThresholdLimit) singleClickListener?.onSingleClick()
+						false
+					}
 					else -> false
 				}
 			} else
@@ -145,5 +156,9 @@ class ColorPickLayout : FrameLayout {
 	private fun selectCenter() {
 		if (cursor != null)
 			setSelectorPoint(measuredWidth / 2, measuredHeight / 2)
+	}
+
+	interface SingleClickListener{
+		fun onSingleClick()
 	}
 }
