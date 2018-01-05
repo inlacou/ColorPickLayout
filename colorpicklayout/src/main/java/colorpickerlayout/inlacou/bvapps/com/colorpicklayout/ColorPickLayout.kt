@@ -2,6 +2,7 @@ package colorpickerlayout.inlacou.bvapps.com.colorpicklayout
 
 import android.annotation.TargetApi
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Point
@@ -11,6 +12,9 @@ import android.view.MotionEvent
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import java.lang.IllegalArgumentException
+import android.view.View
+
+
 
 class ColorPickLayout : FrameLayout {
 
@@ -76,7 +80,7 @@ class ColorPickLayout : FrameLayout {
 				when (event.action) {
 					MotionEvent.ACTION_DOWN -> onTouchReceived(event)
 					MotionEvent.ACTION_MOVE -> onTouchReceived(event)
-					MotionEvent.ACTION_UP -> onTouchReceived(event)
+					MotionEvent.ACTION_UP -> {onTouchReceived(event); false}
 					else -> false
 				}
 			} else
@@ -92,11 +96,15 @@ class ColorPickLayout : FrameLayout {
 			cursor!!.setPoint(snapPoint.x, snapPoint.y)
 			fireColorListener()
 		}
+		if (color == Color.TRANSPARENT){
+			return false
+		}
 		return true
 	}
 
 	private fun getColorFromBitmap(x: Float, y: Float): Int {
 		try {
+
 			buildDrawingCache()
 			if (drawingCache != null) return drawingCache.getPixel(x.toInt(), y.toInt())
 		} catch (ignored: IllegalArgumentException) {
@@ -105,14 +113,16 @@ class ColorPickLayout : FrameLayout {
 		return 0
 	}
 
-	override fun dispatchDraw(canvas: Canvas) {
-		super.dispatchDraw(canvas)
+	fun loadBitmapFromView(v: View): Bitmap {
+		val b = Bitmap.createBitmap(v.layoutParams.width, v.layoutParams.height, Bitmap.Config.ARGB_8888)
+		val c = Canvas(b)
+		v.layout(0, 0, v.layoutParams.width, v.layoutParams.height)
+		v.draw(c)
+		return b
 	}
 
 	private fun fireColorListener() {
-		if (cursor!!.colorListener != null) {
-			cursor!!.colorListener.onColorSelected(colorEnvelope)
-		}
+		cursor!!.colorListener.onColorSelected(colorEnvelope)
 	}
 
 
