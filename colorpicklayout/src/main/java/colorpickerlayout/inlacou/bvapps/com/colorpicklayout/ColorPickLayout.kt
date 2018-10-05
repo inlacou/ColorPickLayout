@@ -19,7 +19,7 @@ class ColorPickLayout : FrameLayout {
 	private var cursor: Cursor? = null
 	private var actionDownTime: Long = 0
 	var singleClickListener: SingleClickListener? = null
-	var singleClickThresholdLimit = 60
+	var singleClickThresholdLimit = 75
 
 	private val color: Int
 		get() = cursor!!.color
