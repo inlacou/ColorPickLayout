@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/ColorPickLayout.iml" filepath="$PROJECT_DIR$/ColorPickLayout.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/ColorPickLayout-app.iml" filepath="$PROJECT_DIR$/app/ColorPickLayout-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/colorpicklayout/ColorPickLayout-colorpicklayout.iml" filepath="$PROJECT_DIR$/colorpicklayout/ColorPickLayout-colorpicklayout.iml" />
       <module fileurl="file://$PROJECT_DIR$/ColorPickerLayout.iml" filepath="$PROJECT_DIR$/ColorPickerLayout.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/colorpicklayout/colorpicklayout.iml" filepath="$PROJECT_DIR$/colorpicklayout/colorpicklayout.iml" />
